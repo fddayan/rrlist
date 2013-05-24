@@ -1,0 +1,82 @@
+#!/usr/bin/env ruby
+
+require File.expand_path('../../lib/rrlist', __FILE__)
+require 'trollop'
+
+opts = Trollop::options do
+  banner "Usage: rrlist [options]"
+  opt :size,      "The size of the list",   :type => Integer, :default => 10
+  opt :range,     "The range of the list",  :type => Integer, :default => 5
+  opt :delimiter, "The line column divider",:type => String,  :default => nil
+  opt :function,  "The function to apply",  :type => String,  :default => nil
+  opt :threshold, "Set colors the value is max, min or equal to the specified number",:type => Float,  :default => nil
+  opt :verbosity, "Verbosity of the list s,m,l", :type=> String, :default => "m"
+end
+
+# Trollop::die :volume, "must be non-negative" unless opts[:size]
+# Trollop::die :file, "must exist" unless File.exist?(opts[:file]) if opts[:file]
+
+rr_list = RRList.new :size => opts[:size] ,:range => opts[:range]
+
+# puts rr_list.to_s
+
+rr_list.before_add(&RRMath::function(opts[:function].to_sym)) if opts[:function]
+
+ARGF.each do |line|
+    if opts[:delimiter]
+      rr_list.add line.to_i
+    else   
+      s = line.split(opts[:delimiter])
+    
+      if s.size == 1
+        rr_list.add s.first.to_i
+      elsif s.size == 2
+        rr_list.add_at s.first.to_i, s.second.to_i
+      end
+    end
+end
+
+def get_value value
+  case value
+    when Hash
+      value[:value]
+    else
+      value
+  end
+end
+
+def print_value verbosity,v,index
+  case verbosity
+    when "S"
+      puts "#{v}"
+    when "M"
+      puts "#{index}\t#{v}"        
+  end
+end
+
+# puts "#{rr_list.values}"
+rr_list.each_with_index do |val,index|
+  v = get_value val
+  if opts[:threshold]
+    require 'rainbow'
+    color = if v.nil?
+              nil
+            elsif v == opts[:threshold]
+              :yellow
+            elsif v < opts[:threshold]
+              :red
+            elsif v > opts[:threshold]
+              :green
+            end
+    
+    if v
+      cv = v.to_s.color(color)
+      print_value opts[:verbosity].upcase, cv, index
+    else
+      print_value opts[:verbosity].upcase, "", index
+    end
+  else
+    print_value opts[:verbosity].upcase, v, index
+  end
+end
+

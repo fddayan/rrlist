@@ -1,0 +1,56 @@
+#!/usr/bin/env ruby
+
+require File.expand_path('../../lib/rrlist/rrcomposite', __FILE__)
+
+# puts "Rrdtool #{ARGV}"
+command = ARGV.shift
+
+case command
+  when "create"
+    file_name = ARGV.shift
+
+    if File.exists?(file_name)
+      puts "File '#{file_name}' already exists"
+      return
+    end
+
+    size = ARGV.shift.to_i
+
+    data = [
+      {:size => size, :range => 1},
+      {:size => size, :range => 10},
+      {:size => size, :range => 50},
+      {:size => size, :range => 100},
+    ]
+
+    puts "Initializing database"
+    rr_composite = RRComposite.new(data)
+    puts "Creating database to '#{file_name}'"
+    rr_composite.persist(file_name)
+
+  when "update"
+    file_name = ARGV.shift
+    index = ARGV.shift.to_i
+    value = ARGV.shift.to_i
+
+    puts "Updating database #{file_name} with #{value} at #{index}"
+
+    rr_composite = RRComposite.load(file_name)
+
+    rr_composite.add_at(index,value)
+    rr_composite.persist(file_name)
+
+    puts "Updated"
+
+  when "display"
+    file_name = ARGV.shift
+    rr_list_index = ARGV.shift.to_i
+
+    rr_composite = RRComposite.load(file_name)
+
+    rr_composite.rr_lists[rr_list_index].each_with_index do |value, index|
+      puts "#{index} : #{value}"
+    end
+end
+
+

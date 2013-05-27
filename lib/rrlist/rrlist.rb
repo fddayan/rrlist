@@ -75,7 +75,7 @@ class RRList
     
     @add_at_next = 0 unless @add_at_next
     add_at @add_at_next, value
-    @add_at_next += 1
+    #@add_at_next += 1
   end
 
   def update_at(index, value)
@@ -99,6 +99,7 @@ class RRList
   end
 
   def add_at(index,value,options={})
+    @add_at_next = index + 1
     update_position = options[:update_position] || true
     pos = ((index/@range) % @size)
 
@@ -134,11 +135,15 @@ class RRList
     elsif lower?(index)
         rotate(prev_index(index),@values.get(pos)) if @after_rotate
         # set_value(pos,value)
-        clean =  min_index-index
-        (1).upto(clean-1) do |i|
+        clean =  min_index-1-index
+        (0).upto(clean-1) do |i|
           @values.put((pos + i) % @size, nil)
         end
         @values.put(pos,nil) # We clean the value, if not it gets used by @before_add
+
+        (0).upto(@position-1) do |i|
+          @values.put(i,nil)
+        end if @overal_position >= @size
         set_value(pos,value)
         @position = pos if update_position
         @overal_position = @overal_position - (clean * @range)
@@ -151,7 +156,7 @@ class RRList
     if max_index <= index_size
       0
     else
-      max_index - index_size + remaining_in_slot
+      (max_index + 1) - index_size + remaining_in_slot
     end
   end
 
@@ -268,7 +273,6 @@ class RRList
 
 end
 
-# require 'tokyocabinet'
 module RRListStore
   class InMemoryArray
 
@@ -307,63 +311,5 @@ module RRListStore
       @values[position..@values.size] + @values[0...position]
     end
 
-  end
-
-  # Not possible because I need the position, overla_position, size and range
-  # class MarshalableInMemoryArray < RRListStore::InMemoryArray
-  #   def flush
-  #   end
-  # end
-
-  class TokyoCabinet
-    # include TokyoCabinet
-
-    def initialize(options)
-      raise ":name is required" unless options[:name]
-
-      @fdb = FDB::new
-
-      err("open error") unless @fdb.open(options[:name], FDB::OWRITER | FDB::OCREAT)
-    end
-
-    def put(index,value)
-      err("put error") unless @fdb.put(index,value)
-      nil
-    end
-
-    def get(index)
-      @fdb.get(index)
-    end
-
-    def fill_with_nils
-      # 0.upto(@fdb.rnum) do |index|
-        # @fdb.put(index,nil)
-      # end
-      fill(nil,0...@fdb.rnum)
-    end
-
-    def fill(value,range)
-      range.each do |index|
-        @fdb.put(index,value)
-      end
-    end
-
-    def raw
-      r = []
-      0.upto(@fdb.rnum) do |index|
-        r[index] << @fdb.get(index)
-      end
-      r
-    end
-
-    def start_at(position)
-      r = raw
-      r[position..r.size] + r[0...position]
-    end
-
-    private
-      def err(message)
-        raise "TokyoCabinet: #{message}: #{@fdb.errmsg(@fdb.ecode)}"
-      end
   end
 end

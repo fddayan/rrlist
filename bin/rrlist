@@ -13,12 +13,7 @@ opts = Trollop::options do
   opt :verbosity, "Verbosity of the list s,m,l", :type=> String, :default => "m"
 end
 
-# Trollop::die :volume, "must be non-negative" unless opts[:size]
-# Trollop::die :file, "must exist" unless File.exist?(opts[:file]) if opts[:file]
-
 rr_list = RRList.new :size => opts[:size] ,:range => opts[:range]
-
-# puts rr_list.to_s
 
 rr_list.before_add(&RRMath::function(opts[:function].to_sym)) if opts[:function]
 
@@ -54,7 +49,6 @@ def print_value verbosity,v,index
   end
 end
 
-# puts "#{rr_list.values}"
 rr_list.each_with_index do |val,index|
   v = get_value val
   if opts[:threshold]

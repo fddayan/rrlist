@@ -14,7 +14,7 @@ describe RRMath do
     RRMath::FUNCTIONS_PROC.should_not be_empty
 
     RRMath::FUNCTIONS_PROC.each do |k,v|
-      RRMath.get_function_prod(k).should === Proc
+      RRMath.get_function_prod(k).should be_a(Proc)
     end
   end
 end

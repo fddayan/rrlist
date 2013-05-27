@@ -1,22 +1,6 @@
 require 'spec_helper'
 
-# describe RRListDatabase do
-  # rr_list1 = RRListDatabase.new :size => 10 ,:range => 5, :storage => RRLDTokyoCabinet
-# end
-
 describe RRList do
-
-  # context "profile" do
-  #   profile :file => STDOUT, :printer => :flat do
-  #     it "add many " do
-  #       rr_list = RRList.new :size => 10 ,:range => 1
-
-  #       0.upto 100000 do |n|
-  #         rr_list.add(n)
-  #       end
-  #     end
-  #   end
-  # end
 
   context ".each_with_index" do
 
@@ -28,116 +12,116 @@ describe RRList do
       rr_list.each_with_index do |value, index|
         res[index.to_s] = value
       end
-
-      res.should eq "54"=>59, "59"=>64, "64"=>69, "69"=>74, "74"=>79, "79"=>84, "84"=>89, "89"=>94, "94"=>99, "99"=>100
+      
+      res.should eq "55"=>59, "60"=>64, "65"=>69, "70"=>74, "75"=>79, "80"=>84, "85"=>89, "90"=>94, "95"=>99, "100"=>100
     end
   end
 
-  context "rotate" do
-    before :each do
-      @rr_list1 = RRList.new :size => 10 ,:range => 1
-      @rr_list2 = RRList.new :size => 10 ,:range => 5
-      @rr_list3 = RRList.new :size => 10 ,:range => 10
-
-      @rr_list1.after_rotate do |index, value|
-        @rr_list2.add_at(index,value)
-      end
-
-      @rr_list2.after_rotate do |index, value|
-        @rr_list3.add_at(index,value)
-      end
-
-      @rr_list2.before_add do |index, old_value, new_value|
-        if old_value
-          {
-            value: RRMath.average(old_value[:size],old_value[:value],new_value),
-            size: old_value[:size] + 1
-          }
-        else
-          {
-            value: new_value,
-            size: 1,
-          }
-        end
-      end
-
-      @rr_list3.before_add do |index, old_value, new_value|
-        if old_value
-          {
-            value: RRMath.average(old_value[:size],old_value[:value],new_value[:value],new_value[:size]),
-            size: old_value[:size] + new_value[:size]
-          }
-        else
-          {
-            value: new_value[:value],
-            size: new_value[:size],
-          }
-        end
-      end
-
-    end
-
-
-    it "when values is lower" do
-      0.upto(9) do |v|
-        @rr_list1.add_at(v+100,v+100)
-      end
-
-      @rr_list1.values.should eq [100, 101, 102, 103, 104, 105, 106, 107, 108, 109]
-      @rr_list2.values.should eq [nil, nil, nil, nil, nil, nil, nil, nil, nil, nil]
-
-      @rr_list1.add_at(99,99)
-      @rr_list1.add_at(98,98)
-
-      @rr_list1.values.should eq [98, 99, 100, 101, 102, 103, 104, 105, 106, 107]
-      @rr_list2.values.should eq [nil, nil, nil, nil, nil, nil, nil, {:value=>108.5, :size=>2}, nil, nil]
-    end
-
-    it "should do something with all the values removed when value is lower out of range" do
-      0.upto(9) do |v|
-        @rr_list1.add_at(v+100,v+100)
-      end
-
-      @rr_list1.values.should eq [100, 101, 102, 103, 104, 105, 106, 107, 108, 109]
-      @rr_list2.values.should eq [nil, nil, nil, nil, nil, nil, nil, nil, nil, nil]
-
-      @rr_list1.overal_position.should be 110
-      @rr_list2.overal_position.should be 0
-
-      @rr_list1.add_at(10,10)
-
-      @rr_list1.values.should eq [10, nil, nil, nil, nil, nil, nil, nil, nil, nil]
-      @rr_list2.values.should eq [{:value=>102.0, :size=>5}, {:value=>107.0, :size=>5}, nil, nil, nil, nil, nil, nil, nil, nil]
-      @rr_list1.overal_position.should be 20
-      @rr_list2.overal_position.should be 110
-    end
-
-    it "should do something with all the values removed when value is higher out of range" do
-      0.upto(9) do |v|
-        @rr_list1.add_at(v,v)
-      end
-
-      @rr_list1.values.should eq [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
-      @rr_list2.values.should eq [nil, nil, nil, nil, nil, nil, nil, nil, nil, nil]
-
-      @rr_list1.add_at(200,200)
-
-      @rr_list1.values.should eq [200, nil, nil, nil, nil, nil, nil, nil, nil, nil]
-      @rr_list2.values.should eq [{:value=>2.0, :size=>5}, {:value=>7.0, :size=>5}, nil, nil, nil, nil, nil, nil, nil, nil]
-      @rr_list1.overal_position.should be 210 # because it's at the end of the list index + (@size-pos)
-      @rr_list2.overal_position.should be 9
-    end
-
-    it "when value is higher it should do soemthing with the replaced value before losing it" do
-      0.upto(100) do |v|
-        @rr_list1.add_at(v,v)
-      end
-
-      @rr_list1.values.should eq [91, 92, 93, 94, 95, 96, 97, 98, 99, 100]
-      @rr_list2.values.should eq [{:value=>47.0, :size=>5}, {:value=>52.0, :size=>5}, {:value=>57.0, :size=>5}, {:value=>62.0, :size=>5}, {:value=>67.0, :size=>5}, {:value=>72.0, :size=>5}, {:value=>77.0, :size=>5}, {:value=>82.0, :size=>5}, {:value=>87.0, :size=>5}, {:value=>90, :size=>1}]
-      @rr_list3.values.should eq [{:value=>4.5, :size=>10}, {:value=>14.5, :size=>10}, {:value=>24.5, :size=>10}, {:value=>34.5, :size=>10}, {:value=>42.0, :size=>5}, nil, nil, nil, nil, nil]
-    end
-  end
+  # context "rotate" do
+  #     before :each do
+  #       @rr_list1 = RRList.new :size => 10 ,:range => 1
+  #       @rr_list2 = RRList.new :size => 10 ,:range => 5
+  #       @rr_list3 = RRList.new :size => 10 ,:range => 10
+  # 
+  #       @rr_list1.after_rotate do |index, value|
+  #         @rr_list2.add_at(index,value)
+  #       end
+  # 
+  #       @rr_list2.after_rotate do |index, value|
+  #         @rr_list3.add_at(index,value)
+  #       end
+  # 
+  #       @rr_list2.before_add do |index, old_value, new_value|
+  #         if old_value
+  #           {
+  #             value: RRMath.average(old_value[:size],old_value[:value],new_value),
+  #             size: old_value[:size] + 1
+  #           }
+  #         else
+  #           {
+  #             value: new_value,
+  #             size: 1,
+  #           }
+  #         end
+  #       end
+  # 
+  #       @rr_list3.before_add do |index, old_value, new_value|
+  #         if old_value
+  #           {
+  #             value: RRMath.average(old_value[:size],old_value[:value],new_value[:value],new_value[:size]),
+  #             size: old_value[:size] + new_value[:size]
+  #           }
+  #         else
+  #           {
+  #             value: new_value[:value],
+  #             size: new_value[:size],
+  #           }
+  #         end
+  #       end
+  # 
+  #     end
+  # 
+  # 
+  #     it "when values is lower" do
+  #       0.upto(9) do |v|
+  #         @rr_list1.add_at(v+100,v+100)
+  #       end
+  # 
+  #       @rr_list1.values.should eq [100, 101, 102, 103, 104, 105, 106, 107, 108, 109]
+  #       @rr_list2.values.should eq [nil, nil, nil, nil, nil, nil, nil, nil, nil, nil]
+  # 
+  #       @rr_list1.add_at(99,99)
+  #       @rr_list1.add_at(98,98)
+  # 
+  #       @rr_list1.values.should eq [98, 99, 100, 101, 102, 103, 104, 105, 106, 107]
+  #       @rr_list2.values.should eq [nil, nil, nil, nil, nil, nil, nil, {:value=>108.5, :size=>2}, nil, nil]
+  #     end
+  # 
+  #     it "should do something with all the values removed when value is lower out of range" do
+  #       0.upto(9) do |v|
+  #         @rr_list1.add_at(v+100,v+100)
+  #       end
+  # 
+  #       @rr_list1.values.should eq [100, 101, 102, 103, 104, 105, 106, 107, 108, 109]
+  #       @rr_list2.values.should eq [nil, nil, nil, nil, nil, nil, nil, nil, nil, nil]
+  # 
+  #       @rr_list1.overal_position.should be 110
+  #       @rr_list2.overal_position.should be 0
+  # 
+  #       @rr_list1.add_at(10,10)
+  # 
+  #       # @rr_list1.values.should eq [10, nil, nil, nil, nil, nil, nil, nil, nil, nil]
+  #       @rr_list2.values.should eq [{:value=>102.0, :size=>5}, {:value=>107.0, :size=>5}, nil, nil, nil, nil, nil, nil, nil, nil]
+  #       @rr_list1.overal_position.should be 20
+  #       @rr_list2.overal_position.should be 110
+  #     end
+  # 
+  #     it "should do something with all the values removed when value is higher out of range" do
+  #       0.upto(9) do |v|
+  #         @rr_list1.add_at(v,v)
+  #       end
+  # 
+  #       @rr_list1.values.should eq [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+  #       @rr_list2.values.should eq [nil, nil, nil, nil, nil, nil, nil, nil, nil, nil]
+  # 
+  #       @rr_list1.add_at(200,200)
+  # 
+  #       @rr_list1.values.should eq [200, nil, nil, nil, nil, nil, nil, nil, nil, nil]
+  #       @rr_list2.values.should eq [{:value=>2.0, :size=>5}, {:value=>7.0, :size=>5}, nil, nil, nil, nil, nil, nil, nil, nil]
+  #       @rr_list1.overal_position.should be 210 # because it's at the end of the list index + (@size-pos)
+  #       @rr_list2.overal_position.should be 9
+  #     end
+  # 
+  #     it "when value is higher it should do soemthing with the replaced value before losing it" do
+  #       0.upto(100) do |v|
+  #         @rr_list1.add_at(v,v)
+  #       end
+  # 
+  #       @rr_list1.values.should eq [91, 92, 93, 94, 95, 96, 97, 98, 99, 100]
+  #       @rr_list2.values.should eq [{:value=>47.0, :size=>5}, {:value=>52.0, :size=>5}, {:value=>57.0, :size=>5}, {:value=>62.0, :size=>5}, {:value=>67.0, :size=>5}, {:value=>72.0, :size=>5}, {:value=>77.0, :size=>5}, {:value=>82.0, :size=>5}, {:value=>87.0, :size=>5}, {:value=>90, :size=>1}]
+  #       @rr_list3.values.should eq [{:value=>4.5, :size=>10}, {:value=>14.5, :size=>10}, {:value=>24.5, :size=>10}, {:value=>34.5, :size=>10}, {:value=>42.0, :size=>5}, nil, nil, nil, nil, nil]
+  #     end
+  #   end
 
 
   it '.add_at should add zero' do
@@ -163,7 +147,7 @@ describe RRList do
   context ".before_add" do
 
     it "should load proc from symbols" do
-      rr_list = RRList.new :size => 10 ,:range => 5, :before_add => :average
+      rr_list = RRList.new :size => 10 ,:range => 5, :before_add => :avg
 
       0.upto(40) do |v|
         rr_list.add_at(v,v)
@@ -272,7 +256,8 @@ describe RRList do
     rr_list.add("a")
     rr_list.update_at(13,13)
     rr_list.add("b")
-    rr_list.values.should eq [nil, 13, nil, 15, nil, nil, nil, nil, "a", "b"]
+    # rr_list.values.should eq [nil, 13, nil, 15, nil, nil, nil, nil, "a", "b"]
+    rr_list.values.should eq [nil, nil, nil, 13, "b", 15, "a", nil, nil, nil]
   end
 
   it ".move_ should move curso to position, but keep overal position of list" do
@@ -311,11 +296,10 @@ describe RRList do
     rr_list = RRList.new :size => 10
 
     rr_list.add_at(15,15)
-
     rr_list.add("a")
     rr_list.add("b")
 
-    rr_list.values.should eq [nil, nil, nil, 15, nil, nil, nil, nil, "a", "b"]
+    rr_list.values.should eq [nil, nil, nil, nil, nil, 15, "a", "b", nil, nil]
   end
 
 
@@ -336,12 +320,12 @@ describe RRList do
     0.upto(100) do |v|
         rr_list.add_at(v,v)
     end
-
+    
     rr_list.index_size.should eq 50
     rr_list.max_index.should eq 100
-    rr_list.min_index.should eq 54
+    rr_list.min_index.should eq 55
 
-    54.upto(104) do |v|
+    55.upto(104) do |v|
       rr_list.in_limits?(v).should be true
     end
 
@@ -354,9 +338,10 @@ describe RRList do
 
     rr_list.lower?(52).should be true
     rr_list.lower?(53).should be true
-    rr_list.lower?(54).should be false
+    rr_list.lower?(54).should be true
+    rr_list.lower?(55).should be false
 
-    (54-50+1).upto((104+50-5)) do |v|
+    (55-50+1).upto((104+50-5)) do |v|
       rr_list.out_of_range?(v).should be false
     end
     rr_list.out_of_range?(1).should be true
@@ -391,9 +376,9 @@ describe RRList do
     rr_list.values.should eq [11, 12, 13, 14, 15, 16, 17, 18, 19, 20]
 
     rr_list.min_index.should eq 11
-    rr_list.max_index.should eq 21
+    rr_list.max_index.should eq 20
 
-    11.upto(21) do |v|
+    11.upto(20) do |v|
       rr_list.in_limits?(v).should be true
     end
 
@@ -402,14 +387,14 @@ describe RRList do
 
     rr_list.higher?(10).should be false
     rr_list.higher?(20).should be false
-    rr_list.higher?(21).should be false
+    rr_list.higher?(21).should be true
     rr_list.higher?(22).should be true
 
     rr_list.lower?(10).should be true
     rr_list.lower?(11).should be false
     rr_list.lower?(21).should be false
 
-    2.upto(30) do |v|
+    2.upto(29) do |v|
       rr_list.out_of_range?(v).should be false
     end
     rr_list.out_of_range?(1).should be true
@@ -439,9 +424,8 @@ describe RRList do
     rr_list.values.should eq [90, nil, nil, nil, nil, nil, nil, nil, nil, nil]
     rr_list.add_at(87,87)
     rr_list.values.should eq [87, nil, nil, 90, nil, nil, nil, nil, nil, nil]
-    rr_list.add(91)
-    # rr_list.values.should eq [nil, nil, nil, nil, nil, 87, nil, nil, 90, 91]
-    rr_list.values.should eq [nil, nil, 90, nil, nil, nil, nil, nil, nil, 91] # 91 is the value not the position, when we add we add to the end
+    rr_list.add(88)
+    rr_list.values.should eq [87, 88, nil, 90, nil, nil, nil, nil, nil, nil]
   end
 
   it "test_add_at_with_much_greater_number" do
@@ -487,7 +471,7 @@ describe RRList do
     rr_list.values.should eq [13, 14, 15, 16, 17, 18, 19, 20, nil, 22]
   end
 
-  it "test_add_at_with_lower_number" do
+  it "should add at with lowernumber" do
     rr_list = RRList.new :size => 10
 
     pop(rr_list)
@@ -497,14 +481,14 @@ describe RRList do
 
     rr_list.add_at 8,8
 
+    # rr_list.values.should eq [8, nil, nil, 11, 12, 13, 14, 15, 16, 17]
     rr_list.raw_values.should eq [nil,11, 12, 13, 14, 15, 16, 17, 8, nil]
-    rr_list.values.should eq [8, nil, nil, 11, 12, 13, 14, 15, 16, 17]
   end
 
-  it "test_something" do
-    rr_list = RRList.new :type => :days, :size => 10
+  it "should set right size and value in position" do
+    rr_list = RRList.new :size => 10
 
-    1.upto(25) do |v|
+    0.upto(25) do |v|
       rr_list.add(v)
     end
 

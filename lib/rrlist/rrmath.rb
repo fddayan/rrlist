@@ -1,9 +1,10 @@
-module RRMath
+module RRList
+  module Math
 
   def self.get_function_prod(name)
     FUNCTIONS_PROC[name]
   end
-  
+
   def self.function(name)
     RRMath::FUNCTIONS_PROC[name] || (raise "Function #{name} cannot be found")
   end
@@ -46,31 +47,31 @@ module RRMath
        end
     end
   end
-  
+
   def self.max
     Proc.new do |index, old_value, new_value|
       old_value.nil? || (new_value > old_value) ? new_value : old_value
     end
   end
-  
+
   def self.min
     Proc.new do |index, old_value, new_value|
       old_value.nil? || (new_value < old_value) ? new_value : old_value
     end
   end
-  
+
   def self.sum
     Proc.new do |index, old_value, new_value|
       old_value ? (old_value + new_value) : new_value
     end
   end
-  
+
   def self.decr
     Proc.new do |index, old_value, new_value|
       old_value ? (old_value - new_value) : new_value
     end
   end
-  
+
 
    FUNCTIONS_PROC = {
     avg: RRMath::agregate_proc,

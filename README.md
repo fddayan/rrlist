@@ -1,10 +1,11 @@
+# WORK IN PROGRESS (ready soon)
 # RRList
 
 Inspired by `RRDTool`
 
 Basically, you can add elements to a list, but the sizes remains constant over time.
 
-If you add an element to to the list that is out of the range, moves the cursor forward and items at the lower indexes are lost. 
+If you add an element to to the list that is out of the range, moves the cursor forward and items at the lower indexes are lost.
 
 For example:
 

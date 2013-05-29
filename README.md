@@ -1,26 +1,30 @@
-=WORK IN PROGRESS
-
+# WORK IN PROGRESS
 Inspired by `RRDTool`
+
 Basically, you can add elements to a list, but the sizes remains constant over time.
+
 If you add an element to to the list that is out of the range, moves the cursor forward and items at the lower indexes are lost. For example:
 
-[1,2,3,4,5]
-add 6
-[2,3,4,5,6]
-add 7
-[3,4,5,6,7]
+    [1,2,3,4,5]
+    add 6
+    [2,3,4,5,6]
+    add 7
+    [3,4,5,6,7]
 
-=== Install
+Install
+========
 
     gem install rrlist
+or
 
     gem 'rrlist'
 
-== Usage
-
-*Basic*
+Usage
+======
 
     require 'rrlist'
+    
+*Basic manipulation*
 
     rrlist = RRList::List.new :size => 10
 
@@ -32,12 +36,6 @@ add 7
     rrlist.min_index  #=> 91
     rrlist.min_index  #=> 100
     rrlist.get(93)    #=> 93
-
-    rrlist.each {  |value| ... }
-    rrlist.each_with_index {  |value,index| puts "#{value} #{index}" }
-    # => 91 91
-    # => 92 92
-    ....
 
     rrlist.add(101)
 
@@ -62,7 +60,21 @@ add 7
     rrlist.min_index      #=> 1991
     rrlist.max_index      #=> 2000
 
+*Looping*
+
+    rrlist = RRList::List.new :size => 10
+    
+    1.upto(100) { |n| rrlist.add(n) }
+    
+    rrlist.each {  |value| ... }
+    rrlist.each_with_index {  |value,index| puts "#{value} #{index}" }
+    # => 91 91
+    # => 92 92
+    ....
+
+
 *Ranges*
+    
     rrlist = RRList::List.new :size => 10, :range => 5
 
     0.upto(100) { |n| rrlist.add(n) }
@@ -73,6 +85,7 @@ add 7
 
 
 *Functions*
+
 To sum all the values added to a range
 
     rrlist = RRList::List.new :size => 10, :range => 5 do |index, old_value, new_value|

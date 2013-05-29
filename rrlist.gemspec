@@ -7,7 +7,7 @@ Gem::Specification.new do |s|
   s.version     = Rrlist::VERSION
   s.authors     = ["Federico Dayan"]
   s.email       = ["federico.dayan@gmail.com"]
-  s.homepage    = ""
+  s.homepage    = "https://github.com/fddayan/rrlist"
   s.summary     = %q{A list that its size remains constant over time}
   s.description = %q{Inspired by RRDTool. A list that its size remains constant over time. You can use ranges and functions.}
 

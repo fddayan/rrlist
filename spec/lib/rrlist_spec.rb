@@ -37,6 +37,20 @@ describe RRList::List do
     subject.each { |v| v.should_not be_nil }
   end
 
+  it "should clear the values but do not lose position" do
+    subject.clear
+    subject.min_index.should be 21
+    subject.max_index.should be 30
+    subject.values.should eq [nil,nil,nil,nil,nil,nil,nil,nil,nil,nil]
+  end
+
+  it "should reset to original" do
+    subject.reset
+    subject.min_index.should be 0
+    subject.max_index.should be 0
+    subject.values.should eq [nil,nil,nil,nil,nil,nil,nil,nil,nil,nil]
+  end
+
   context ".each_with_index" do
 
     it "should iterate over passing the rigth index" do

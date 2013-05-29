@@ -11,41 +11,35 @@ module RRList
 
       @values = options[:store] || RRList::Store::InMemoryArray.new
       @size = options[:size]
-      @position = 0
       @range = options[:range] || 1
-      @current_index = options[:overal_position] || 0
 
-      if options[:values]
-        @original_values = options[:values]
-        @values.set_values(options[:values])
-      else
-        @values.fill(nil,0...@size)
-      end
+      reset
 
       @before_add_proc = before_add if block_given?
     end
 
+    # Sets all values to nil, but it does not the cursor
     def clear
        @values.fill(nil,0...@size)
     end
 
     def reset
-      @values.set_values(options[:values])
+      clear
       @position = 0
       @current_index = 0
     end
 
-    #@return The `min_index` and `max_index` as a list
+    # @return The `min_index` and `max_index` as a list
     def ranges
       return [min_index,max_index]
     end
 
-    #@return True if the given number is in the limits of the current max an min index of the list
+    # @return True if the given number is in the limits of the current max an min index of the list
     def in_limits?(index)
       ( !higher?(index) && !lower?(index))
     end
 
-    #@return True if the given number is out of the range and all numbers will be lost if set
+    # @return True if the given number is out of the range and all numbers will be lost if set
     def out_of_range?(index) # refactor to out of limits?
       if in_limits?(index)
         return false
@@ -56,12 +50,12 @@ module RRList
       end
     end
 
-    #@retrun True if the giving number is higher that the current max index.
+    # @retrun True if the giving number is higher that the current max index.
     def higher?(index)
       index > (max_index + remaining_in_slot)
     end
 
-    #@retrun True if the giving number is lower that the current min index.
+    # @retrun True if the giving number is lower that the current min index.
     def lower?(index)
       index < min_index
     end
@@ -79,19 +73,22 @@ module RRList
       end
     end
 
-    #@return the value for the specified index
+    # @return the value for the specified index
     def get(index)
       pos = ((index/@range) % @size)
       @values.get(pos)
     end
 
-    # Adds a value to the next index position
+    # Adds a value to the next index position and moves the cursor forward
+    # @param value any object
     def add(value)
       @add_at_next = 0 unless @add_at_next
       add_at @add_at_next, value
     end
 
     # Add an item to the specified postion and set the cursor to that position
+    # @param index must be higher than max_index
+    # @param value any object
     def add_at(index,value)
       raise "Index is lower that current index" if index < max_index
 
@@ -111,17 +108,17 @@ module RRList
       self
     end
 
-    #@return if range is used, returns the remaining numbers in the current position.
+    # @return if range is used, returns the remaining numbers in the current position.
     def remaining_in_slot
       (@range - (max_index % @range)) - 1
     end
 
-    #@return the index size.
+    # @return the index size.
     def index_size
       @size*@range
     end
 
-    #@return The min index of this list
+    # @return The min index of this list
     def min_index
       if max_index <= index_size
         0
@@ -130,12 +127,12 @@ module RRList
       end
     end
 
-    #@return the max indes of current position
+    # @return the max indes of current position
     def max_index
       @current_index
     end
 
-    #@return the values
+    # @return the values
     def values
       if @current_index < (@size*@range)
         @values.raw

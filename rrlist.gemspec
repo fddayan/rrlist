@@ -4,7 +4,7 @@ require "rrlist/version"
 
 Gem::Specification.new do |s|
   s.name        = "rrlist"
-  s.version     = Rrlist::VERSION
+  s.version     = RRList::VERSION
   s.authors     = ["Federico Dayan"]
   s.email       = ["federico.dayan@gmail.com"]
   s.homepage    = "https://github.com/fddayan/rrlist"

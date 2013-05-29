@@ -1,4 +1,4 @@
-= WORK IN PROGRESS
+=WORK IN PROGRESS
 
 Inspired by `RRDTool`
 Basically, you can add elements to a list, but the sizes remains constant over time.

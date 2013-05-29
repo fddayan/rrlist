@@ -13,16 +13,20 @@ opts = Trollop::options do
   opt :verbosity, "Verbosity of the list s,m,l", :type=> String, :default => "m"
 end
 
-rr_list = RRList.new :size => opts[:size] ,:range => opts[:range]
+if opts[:function]
+  proc_fun = RRList::Functions::function(opts[:function].to_sym)
+else
+  proc_fun = nil
+end
 
-rr_list.before_add(&RRMath::function(opts[:function].to_sym)) if opts[:function]
+rr_list = RRList::List.new(:size => opts[:size],:range => opts[:range], &proc_fun)
 
 ARGF.each do |line|
     if opts[:delimiter]
       rr_list.add line.to_i
-    else   
+    else
       s = line.split(opts[:delimiter])
-    
+
       if s.size == 1
         rr_list.add s.first.to_i
       elsif s.size == 2
@@ -45,7 +49,7 @@ def print_value verbosity,v,index
     when "S"
       puts "#{v}"
     when "M"
-      puts "#{index}\t#{v}"        
+      puts "#{index}\t#{v}"
   end
 end
 
@@ -62,7 +66,7 @@ rr_list.each_with_index do |val,index|
             elsif v > opts[:threshold]
               :green
             end
-    
+
     if v
       cv = v.to_s.color(color)
       print_value opts[:verbosity].upcase, cv, index

@@ -1,4 +1,3 @@
-# WORK IN PROGRESS
 Inspired by `RRDTool`
 
 Basically, you can add elements to a list, but the sizes remains constant over time.
@@ -23,7 +22,7 @@ Usage
 ======
 
     require 'rrlist'
-    
+
 *Basic manipulation*
 
     rrlist = RRList::List.new :size => 10
@@ -63,9 +62,9 @@ Usage
 *Looping*
 
     rrlist = RRList::List.new :size => 10
-    
+
     1.upto(100) { |n| rrlist.add(n) }
-    
+
     rrlist.each {  |value| ... }
     rrlist.each_with_index {  |value,index| puts "#{value} #{index}" }
     # => 91 91
@@ -74,7 +73,7 @@ Usage
 
 
 *Ranges*
-    
+
     rrlist = RRList::List.new :size => 10, :range => 5
 
     0.upto(100) { |n| rrlist.add(n) }

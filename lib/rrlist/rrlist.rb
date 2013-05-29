@@ -144,6 +144,10 @@ module RRList
       end
     end
 
+    def to_s
+      values.to_s
+    end
+
     #########################
     #   Array API
     #########################

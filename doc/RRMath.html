@@ -1,0 +1,634 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>
+  Module: RRMath
+  
+    &mdash; Documentation by YARD 0.8.6.1
+  
+</title>
+
+  <link rel="stylesheet" href="css/style.css" type="text/css" charset="utf-8" />
+
+  <link rel="stylesheet" href="css/common.css" type="text/css" charset="utf-8" />
+
+<script type="text/javascript" charset="utf-8">
+  hasFrames = window.top.frames.main ? true : false;
+  relpath = '';
+  framesUrl = "frames.html#!" + escape(window.location.href);
+</script>
+
+
+  <script type="text/javascript" charset="utf-8" src="js/jquery.js"></script>
+
+  <script type="text/javascript" charset="utf-8" src="js/app.js"></script>
+
+
+  </head>
+  <body>
+    <div id="header">
+      <div id="menu">
+  
+    <a href="_index.html">Index (R)</a> &raquo;
+    
+    
+    <span class="title">RRMath</span>
+  
+
+  <div class="noframes"><span class="title">(</span><a href="." target="_top">no frames</a><span class="title">)</span></div>
+</div>
+
+      <div id="search">
+  
+    <a class="full_list_link" id="class_list_link"
+        href="class_list.html">
+      Class List
+    </a>
+  
+    <a class="full_list_link" id="method_list_link"
+        href="method_list.html">
+      Method List
+    </a>
+  
+    <a class="full_list_link" id="file_list_link"
+        href="file_list.html">
+      File List
+    </a>
+  
+</div>
+      <div class="clear"></div>
+    </div>
+
+    <iframe id="search_frame"></iframe>
+
+    <div id="content"><h1>Module: RRMath
+  
+  
+  
+</h1>
+
+<dl class="box">
+  
+  
+    
+  
+    
+  
+  
+  
+    <dt class="r1 last">Defined in:</dt>
+    <dd class="r1 last">lib/rrlist/rrmath.rb</dd>
+  
+</dl>
+<div class="clear"></div>
+
+
+  <h2>Constant Summary</h2>
+  
+    <dl class="constants">
+      
+        <dt id="FUNCTIONS_PROC-constant" class="">FUNCTIONS_PROC =
+          
+        </dt>
+        <dd><pre class="code"><span class='lbrace'>{</span>
+<span class='label'>avg:</span> <span class='const'>RRMath</span><span class='op'>::</span><span class='id identifier rubyid_agregate_proc'>agregate_proc</span><span class='comma'>,</span>
+<span class='label'>max:</span> <span class='const'>RRMath</span><span class='op'>::</span><span class='id identifier rubyid_max'>max</span><span class='comma'>,</span>
+<span class='label'>min:</span> <span class='const'>RRMath</span><span class='op'>::</span><span class='id identifier rubyid_min'>min</span><span class='comma'>,</span>
+<span class='label'>incr:</span> <span class='const'>RRMath</span><span class='op'>::</span><span class='id identifier rubyid_sum'>sum</span><span class='comma'>,</span>
+<span class='label'>decr:</span><span class='const'>RRMath</span><span class='op'>::</span><span class='id identifier rubyid_decr'>decr</span>
+<span class='rbrace'>}</span></pre></dd>
+      
+    </dl>
+  
+
+
+
+
+
+
+
+  
+    <h2>
+      Class Method Summary
+      <small>(<a href="#" class="summary_toggle">collapse</a>)</small>
+    </h2>
+
+    <ul class="summary">
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#agregate_proc-class_method" title="agregate_proc (class method)">+ (Object) <strong>agregate_proc</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#average-class_method" title="average (class method)">+ (Object) <strong>average</strong>(numbers, previous_average, add_average, add_numbers = 1) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#decr-class_method" title="decr (class method)">+ (Object) <strong>decr</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#function-class_method" title="function (class method)">+ (Object) <strong>function</strong>(name) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#get_function_prod-class_method" title="get_function_prod (class method)">+ (Object) <strong>get_function_prod</strong>(name) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#max-class_method" title="max (class method)">+ (Object) <strong>max</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#min-class_method" title="min (class method)">+ (Object) <strong>min</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#sum-class_method" title="sum (class method)">+ (Object) <strong>sum</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+    </ul>
+  
+
+
+
+  <div id="class_method_details" class="method_details_list">
+    <h2>Class Method Details</h2>
+
+    
+      <div class="method_details first">
+  <h3 class="signature first" id="agregate_proc-class_method">
+  
+    + (<tt>Object</tt>) <strong>agregate_proc</strong> 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/rrlist/rrmath.rb', line 19</span>
+
+<span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_agregate_proc'>agregate_proc</span>
+  <span class='const'>Proc</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_index'>index</span><span class='comma'>,</span> <span class='id identifier rubyid_old_value'>old_value</span><span class='comma'>,</span> <span class='id identifier rubyid_new_value'>new_value</span><span class='op'>|</span>
+    <span class='kw'>case</span> <span class='id identifier rubyid_new_value'>new_value</span>
+      <span class='kw'>when</span> <span class='const'>Hash</span>
+        <span class='kw'>if</span> <span class='id identifier rubyid_old_value'>old_value</span>
+          <span class='lbrace'>{</span>
+            <span class='label'>value:</span> <span class='const'>RRMath</span><span class='period'>.</span><span class='id identifier rubyid_average'>average</span><span class='lparen'>(</span><span class='id identifier rubyid_old_value'>old_value</span><span class='lbracket'>[</span><span class='symbol'>:size</span><span class='rbracket'>]</span><span class='comma'>,</span><span class='id identifier rubyid_old_value'>old_value</span><span class='lbracket'>[</span><span class='symbol'>:value</span><span class='rbracket'>]</span><span class='comma'>,</span><span class='id identifier rubyid_new_value'>new_value</span><span class='lbracket'>[</span><span class='symbol'>:value</span><span class='rbracket'>]</span><span class='comma'>,</span><span class='id identifier rubyid_new_value'>new_value</span><span class='lbracket'>[</span><span class='symbol'>:size</span><span class='rbracket'>]</span><span class='rparen'>)</span><span class='comma'>,</span>
+            <span class='label'>size:</span> <span class='id identifier rubyid_old_value'>old_value</span><span class='lbracket'>[</span><span class='symbol'>:size</span><span class='rbracket'>]</span> <span class='op'>+</span> <span class='id identifier rubyid_new_value'>new_value</span><span class='lbracket'>[</span><span class='symbol'>:size</span><span class='rbracket'>]</span>
+          <span class='rbrace'>}</span>
+        <span class='kw'>else</span>
+          <span class='lbrace'>{</span>
+            <span class='label'>value:</span> <span class='id identifier rubyid_new_value'>new_value</span><span class='lbracket'>[</span><span class='symbol'>:value</span><span class='rbracket'>]</span><span class='comma'>,</span>
+            <span class='label'>size:</span> <span class='id identifier rubyid_new_value'>new_value</span><span class='lbracket'>[</span><span class='symbol'>:size</span><span class='rbracket'>]</span><span class='comma'>,</span>
+          <span class='rbrace'>}</span>
+        <span class='kw'>end</span>
+      <span class='kw'>else</span>
+         <span class='kw'>if</span> <span class='id identifier rubyid_old_value'>old_value</span>
+          <span class='lbrace'>{</span>
+            <span class='label'>value:</span> <span class='const'>RRMath</span><span class='period'>.</span><span class='id identifier rubyid_average'>average</span><span class='lparen'>(</span><span class='id identifier rubyid_old_value'>old_value</span><span class='lbracket'>[</span><span class='symbol'>:size</span><span class='rbracket'>]</span><span class='comma'>,</span><span class='id identifier rubyid_old_value'>old_value</span><span class='lbracket'>[</span><span class='symbol'>:value</span><span class='rbracket'>]</span><span class='comma'>,</span><span class='id identifier rubyid_new_value'>new_value</span><span class='rparen'>)</span><span class='comma'>,</span>
+            <span class='label'>size:</span> <span class='id identifier rubyid_old_value'>old_value</span><span class='lbracket'>[</span><span class='symbol'>:size</span><span class='rbracket'>]</span> <span class='op'>+</span> <span class='int'>1</span>
+          <span class='rbrace'>}</span>
+        <span class='kw'>else</span>
+          <span class='lbrace'>{</span>
+            <span class='label'>value:</span> <span class='id identifier rubyid_new_value'>new_value</span><span class='comma'>,</span>
+            <span class='label'>size:</span> <span class='int'>1</span><span class='comma'>,</span>
+          <span class='rbrace'>}</span>
+        <span class='kw'>end</span>
+     <span class='kw'>end</span>
+  <span class='kw'>end</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="average-class_method">
+  
+    + (<tt>Object</tt>) <strong>average</strong>(numbers, previous_average, add_average, add_numbers = 1) 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+11
+12
+13
+14
+15
+16
+17</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/rrlist/rrmath.rb', line 11</span>
+
+<span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_average'>average</span><span class='lparen'>(</span><span class='id identifier rubyid_numbers'>numbers</span><span class='comma'>,</span><span class='id identifier rubyid_previous_average'>previous_average</span><span class='comma'>,</span><span class='id identifier rubyid_add_average'>add_average</span><span class='comma'>,</span><span class='id identifier rubyid_add_numbers'>add_numbers</span><span class='op'>=</span><span class='int'>1</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_numbers'>numbers</span> <span class='op'>=</span> <span class='id identifier rubyid_numbers'>numbers</span><span class='period'>.</span><span class='id identifier rubyid_to_f'>to_f</span>
+  <span class='id identifier rubyid_previous_average'>previous_average</span> <span class='op'>=</span> <span class='id identifier rubyid_previous_average'>previous_average</span><span class='period'>.</span><span class='id identifier rubyid_to_f'>to_f</span>
+  <span class='id identifier rubyid_add_average'>add_average</span> <span class='op'>=</span> <span class='id identifier rubyid_add_average'>add_average</span><span class='period'>.</span><span class='id identifier rubyid_to_f'>to_f</span>
+
+  <span class='lparen'>(</span><span class='lparen'>(</span><span class='lparen'>(</span><span class='id identifier rubyid_numbers'>numbers</span><span class='op'>*</span><span class='id identifier rubyid_previous_average'>previous_average</span> <span class='rparen'>)</span><span class='op'>+</span> <span class='lparen'>(</span><span class='id identifier rubyid_add_average'>add_average</span><span class='op'>*</span><span class='id identifier rubyid_add_numbers'>add_numbers</span><span class='rparen'>)</span><span class='rparen'>)</span><span class='op'>/</span><span class='lparen'>(</span><span class='id identifier rubyid_numbers'>numbers</span><span class='op'>+</span><span class='id identifier rubyid_add_numbers'>add_numbers</span><span class='rparen'>)</span><span class='rparen'>)</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="decr-class_method">
+  
+    + (<tt>Object</tt>) <strong>decr</strong> 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+68
+69
+70
+71
+72</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/rrlist/rrmath.rb', line 68</span>
+
+<span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_decr'>decr</span>
+  <span class='const'>Proc</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_index'>index</span><span class='comma'>,</span> <span class='id identifier rubyid_old_value'>old_value</span><span class='comma'>,</span> <span class='id identifier rubyid_new_value'>new_value</span><span class='op'>|</span>
+    <span class='id identifier rubyid_old_value'>old_value</span> <span class='op'>?</span> <span class='lparen'>(</span><span class='id identifier rubyid_old_value'>old_value</span> <span class='op'>-</span> <span class='id identifier rubyid_new_value'>new_value</span><span class='rparen'>)</span> <span class='op'>:</span> <span class='id identifier rubyid_new_value'>new_value</span>
+  <span class='kw'>end</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="function-class_method">
+  
+    + (<tt>Object</tt>) <strong>function</strong>(name) 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+7
+8
+9</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/rrlist/rrmath.rb', line 7</span>
+
+<span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_function'>function</span><span class='lparen'>(</span><span class='id identifier rubyid_name'>name</span><span class='rparen'>)</span>
+  <span class='const'>RRMath</span><span class='op'>::</span><span class='const'>FUNCTIONS_PROC</span><span class='lbracket'>[</span><span class='id identifier rubyid_name'>name</span><span class='rbracket'>]</span> <span class='op'>||</span> <span class='lparen'>(</span><span class='id identifier rubyid_raise'>raise</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Function </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_name'>name</span><span class='rbrace'>}</span><span class='tstring_content'> cannot be found</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="get_function_prod-class_method">
+  
+    + (<tt>Object</tt>) <strong>get_function_prod</strong>(name) 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+3
+4
+5</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/rrlist/rrmath.rb', line 3</span>
+
+<span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_get_function_prod'>get_function_prod</span><span class='lparen'>(</span><span class='id identifier rubyid_name'>name</span><span class='rparen'>)</span>
+  <span class='const'>FUNCTIONS_PROC</span><span class='lbracket'>[</span><span class='id identifier rubyid_name'>name</span><span class='rbracket'>]</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="max-class_method">
+  
+    + (<tt>Object</tt>) <strong>max</strong> 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+50
+51
+52
+53
+54</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/rrlist/rrmath.rb', line 50</span>
+
+<span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_max'>max</span>
+  <span class='const'>Proc</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_index'>index</span><span class='comma'>,</span> <span class='id identifier rubyid_old_value'>old_value</span><span class='comma'>,</span> <span class='id identifier rubyid_new_value'>new_value</span><span class='op'>|</span>
+    <span class='id identifier rubyid_old_value'>old_value</span><span class='period'>.</span><span class='id identifier rubyid_nil?'>nil?</span> <span class='op'>||</span> <span class='lparen'>(</span><span class='id identifier rubyid_new_value'>new_value</span> <span class='op'>&gt;</span> <span class='id identifier rubyid_old_value'>old_value</span><span class='rparen'>)</span> <span class='op'>?</span> <span class='id identifier rubyid_new_value'>new_value</span> <span class='op'>:</span> <span class='id identifier rubyid_old_value'>old_value</span>
+  <span class='kw'>end</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="min-class_method">
+  
+    + (<tt>Object</tt>) <strong>min</strong> 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+56
+57
+58
+59
+60</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/rrlist/rrmath.rb', line 56</span>
+
+<span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_min'>min</span>
+  <span class='const'>Proc</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_index'>index</span><span class='comma'>,</span> <span class='id identifier rubyid_old_value'>old_value</span><span class='comma'>,</span> <span class='id identifier rubyid_new_value'>new_value</span><span class='op'>|</span>
+    <span class='id identifier rubyid_old_value'>old_value</span><span class='period'>.</span><span class='id identifier rubyid_nil?'>nil?</span> <span class='op'>||</span> <span class='lparen'>(</span><span class='id identifier rubyid_new_value'>new_value</span> <span class='op'>&lt;</span> <span class='id identifier rubyid_old_value'>old_value</span><span class='rparen'>)</span> <span class='op'>?</span> <span class='id identifier rubyid_new_value'>new_value</span> <span class='op'>:</span> <span class='id identifier rubyid_old_value'>old_value</span>
+  <span class='kw'>end</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="sum-class_method">
+  
+    + (<tt>Object</tt>) <strong>sum</strong> 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+62
+63
+64
+65
+66</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/rrlist/rrmath.rb', line 62</span>
+
+<span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_sum'>sum</span>
+  <span class='const'>Proc</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_index'>index</span><span class='comma'>,</span> <span class='id identifier rubyid_old_value'>old_value</span><span class='comma'>,</span> <span class='id identifier rubyid_new_value'>new_value</span><span class='op'>|</span>
+    <span class='id identifier rubyid_old_value'>old_value</span> <span class='op'>?</span> <span class='lparen'>(</span><span class='id identifier rubyid_old_value'>old_value</span> <span class='op'>+</span> <span class='id identifier rubyid_new_value'>new_value</span><span class='rparen'>)</span> <span class='op'>:</span> <span class='id identifier rubyid_new_value'>new_value</span>
+  <span class='kw'>end</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+  </div>
+
+</div>
+
+    <div id="footer">
+  Generated on Mon May 27 09:38:35 2013 by
+  <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
+  0.8.6.1 (ruby-1.9.2).
+</div>
+
+  </body>
+</html>

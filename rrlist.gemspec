@@ -8,8 +8,8 @@ Gem::Specification.new do |s|
   s.authors     = ["Federico Dayan"]
   s.email       = ["federico.dayan@gmail.com"]
   s.homepage    = ""
-  s.summary     = %q{Inspired by RRDTool. A list that its size remains constant over time}
-  s.description = %q{A list that its size remains constant over time. You can use ranges and functions.}
+  s.summary     = %q{A list that its size remains constant over time}
+  s.description = %q{Inspired by RRDTool. A list that its size remains constant over time. You can use ranges and functions.}
 
   s.rubyforge_project = "rrlist"
 

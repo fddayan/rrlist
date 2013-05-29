@@ -3,7 +3,7 @@ require File.expand_path('../stores', __FILE__)
 module RRList
 
   # Represents a Round Robin List.
-  # You set the max number of items and it size does not increse. While you add more items you lose the older items
+  # You set the max number of items and the size does not increse. While you add more items you lose the older items
   class List
 
     def initialize(options={},&before_add)
@@ -16,12 +16,23 @@ module RRList
       @current_index = options[:overal_position] || 0
 
       if options[:values]
+        @original_values = options[:values]
         @values.set_values(options[:values])
       else
         @values.fill(nil,0...@size)
       end
 
       @before_add_proc = before_add if block_given?
+    end
+
+    def clear
+       @values.fill(nil,0...@size)
+    end
+
+    def reset
+      @values.set_values(options[:values])
+      @position = 0
+      @current_index = 0
     end
 
     #@return The `min_index` and `max_index` as a list

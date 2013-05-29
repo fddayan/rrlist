@@ -14,9 +14,15 @@ Install
 ========
 
     gem install rrlist
+
 or
 
     gem 'rrlist'
+
+or
+
+    git clone ...
+    rake install
 
 Usage
 ======

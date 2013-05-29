@@ -8,8 +8,8 @@ Gem::Specification.new do |s|
   s.authors     = ["Federico Dayan"]
   s.email       = ["federico.dayan@gmail.com"]
   s.homepage    = ""
-  s.summary     = %q{TODO: Write a gem summary}
-  s.description = %q{TODO: Write a gem description}
+  s.summary     = %q{Inspired by RRDTool. A list that its size remains constant over time}
+  s.description = %q{A list that its size remains constant over time. You can use ranges and functions.}
 
   s.rubyforge_project = "rrlist"
 
@@ -23,5 +23,4 @@ Gem::Specification.new do |s|
   s.add_dependency "rainbow"
   s.add_development_dependency "rspec"
   s.add_development_dependency "yard"
-  # s.add_runtime_dependency "rest-client"
 end

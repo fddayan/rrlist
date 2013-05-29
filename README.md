@@ -4,7 +4,9 @@ Inspired by `RRDTool`
 
 Basically, you can add elements to a list, but the sizes remains constant over time.
 
-If you add an element to to the list that is out of the range, moves the cursor forward and items at the lower indexes are lost. For example:
+If you add an element to to the list that is out of the range, moves the cursor forward and items at the lower indexes are lost. 
+
+For example:
 
     [1,2,3,4,5]
     add 6

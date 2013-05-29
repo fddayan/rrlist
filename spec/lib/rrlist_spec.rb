@@ -1,9 +1,9 @@
 require 'spec_helper'
 
-describe RRList do
+describe RRList::List do
 
   subject do
-    RRList.new(:size => 10 ,:range => 1).tap  do |rr_list|
+    RRList::List.new(:size => 10 ,:range => 1).tap  do |rr_list|
       0.upto(30) { |v| rr_list.add(v) }
     end
   end
@@ -40,7 +40,7 @@ describe RRList do
   context ".each_with_index" do
 
     it "should iterate over passing the rigth index" do
-      rr_list = RRList.new :size => 10 ,:range => 5
+      rr_list = RRList::List.new :size => 10 ,:range => 5
       0.upto(100) { |v| rr_list.add_at(v,v) }
 
       res = {}
@@ -75,7 +75,7 @@ describe RRList do
     end
 
     it "should add zero" do
-      rr_list = RRList.new :size => 10
+      rr_list = RRList::List.new :size => 10
 
       0.upto(5) { |v| rr_list.add_at(v,v) }
 
@@ -83,7 +83,7 @@ describe RRList do
     end
 
     it "without never calling .add should work anyway" do
-      rr_list = RRList.new :size => 10
+      rr_list = RRList::List.new :size => 10
 
       0.upto(50) { |v| rr_list.add_at(v,v) }
 
@@ -94,7 +94,7 @@ describe RRList do
   context "before_add" do
 
     it "should load proc from symbols" do
-      rr_list = RRList.new :size => 10 ,:range => 5, &RRMath.get_function_prod(:avg)
+      rr_list = RRList::List.new :size => 10 ,:range => 5, &RRMath.get_function_prod(:avg)
 
       0.upto(40) do |v|
         rr_list.add_at(v,v)
@@ -105,7 +105,7 @@ describe RRList do
     end
 
     it "when rotating the list old values get used by before_add because do not get removed." do
-      rr_list = RRList.new :size => 10 ,:range => 5 do |index,old_value,new_value|
+      rr_list = RRList::List.new :size => 10 ,:range => 5 do |index,old_value,new_value|
         if old_value
           {
             value: RRMath.average(old_value[:size],old_value[:value],new_value),
@@ -128,7 +128,7 @@ describe RRList do
     end
 
     it "should apply agregate function before replacing position on range" do
-      rr_list = RRList.new :size => 10 ,:range => 5 do |index,old_value,new_value|
+      rr_list = RRList::List.new :size => 10 ,:range => 5 do |index,old_value,new_value|
         if old_value
           {
             value: RRMath.average(old_value[:size],old_value[:value],new_value),
@@ -151,7 +151,7 @@ describe RRList do
     end
 
      it "should apply agregate function before replacing position" do
-      rr_list = RRList.new :size => 10 ,:range => 1 do |index,old_value,new_value|
+      rr_list = RRList::List.new :size => 10 ,:range => 1 do |index,old_value,new_value|
         if old_value
           {
             value: RRMath.average(old_value[:size],old_value[:value],new_value),
@@ -177,7 +177,7 @@ describe RRList do
   it "should save times" do
     start_time = Time.utc(2000,"jan",1,20,15,1)
     end_time = start_time + (3600*24)
-    rr_list = RRList.new :size => 24 ,:range => 3600  # 24 hours, 1 hours
+    rr_list = RRList::List.new :size => 24 ,:range => 3600  # 24 hours, 1 hours
 
     seconds = start_time
     while seconds < end_time
@@ -190,7 +190,7 @@ describe RRList do
   end
 
   it "add_at should set cursor at the end" do
-    rr_list = RRList.new :size => 10
+    rr_list = RRList::List.new :size => 10
 
     rr_list.add_at(15,15)
 
@@ -201,7 +201,7 @@ describe RRList do
   end
 
   it "should initialize array of size" do
-    rr_list = RRList.new :size => 10
+    rr_list = RRList::List.new :size => 10
 
     rr_list.values.size.should be 10
     rr_list.values.should eq [nil, nil, nil, nil, nil, nil, nil, nil, nil, nil]
@@ -212,7 +212,7 @@ describe RRList do
   end
 
   it "should add with range of 5 correctly" do
-    rr_list = RRList.new :size => 10, :range => 5
+    rr_list = RRList::List.new :size => 10, :range => 5
 
     0.upto(100) do |v|
         rr_list.add_at(v,v)
@@ -252,7 +252,7 @@ describe RRList do
   end
 
   it "test_add_with_range_of_2" do
-    rr_list = RRList.new :size => 10, :range => 2
+    rr_list = RRList::List.new :size => 10, :range => 2
 
     0.upto(100) do |v|
         rr_list.add_at(v,v)
@@ -262,7 +262,7 @@ describe RRList do
   end
 
   it "question should return valid" do
-    rr_list = RRList.new :size => 10
+    rr_list = RRList::List.new :size => 10
 
     pop(rr_list)
 
@@ -295,7 +295,7 @@ describe RRList do
   end
 
   it "test_sequences" do
-    rr_list = RRList.new :size => 10
+    rr_list = RRList::List.new :size => 10
 
     pop(rr_list)
 
@@ -314,7 +314,7 @@ describe RRList do
   end
 
   it "should insert correctly with a much greater number" do
-    rr_list = RRList.new :size => 10
+    rr_list = RRList::List.new :size => 10
 
     pop(rr_list)
 
@@ -327,7 +327,7 @@ describe RRList do
 
 
   it "add higher number should rotate to left and add nill" do
-    rr_list = RRList.new :size => 10
+    rr_list = RRList::List.new :size => 10
 
     pop(rr_list)
 
@@ -339,7 +339,7 @@ describe RRList do
   end
 
   it "should set right size and value in position" do
-    rr_list = RRList.new :size => 10
+    rr_list = RRList::List.new :size => 10
 
     0.upto(25) do |v|
       rr_list.add(v)

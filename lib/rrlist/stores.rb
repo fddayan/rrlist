@@ -1,5 +1,5 @@
 module RRList
-  module Store
+  module Stores
     class InMemoryArray
 
       def initialize

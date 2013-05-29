@@ -108,7 +108,7 @@ describe RRList::List do
   context "before_add" do
 
     it "should load proc from symbols" do
-      rr_list = RRList::List.new :size => 10 ,:range => 5, &RRMath.get_function_prod(:avg)
+      rr_list = RRList::List.new :size => 10 ,:range => 5, &RRList::Functions.get_function_prod(:avg)
 
       0.upto(40) do |v|
         rr_list.add_at(v,v)
@@ -122,7 +122,7 @@ describe RRList::List do
       rr_list = RRList::List.new :size => 10 ,:range => 5 do |index,old_value,new_value|
         if old_value
           {
-            value: RRMath.average(old_value[:size],old_value[:value],new_value),
+            value: RRList::Functions.average(old_value[:size],old_value[:value],new_value),
             size: old_value[:size] + 1
           }
         else
@@ -145,7 +145,7 @@ describe RRList::List do
       rr_list = RRList::List.new :size => 10 ,:range => 5 do |index,old_value,new_value|
         if old_value
           {
-            value: RRMath.average(old_value[:size],old_value[:value],new_value),
+            value: RRList::Functions.average(old_value[:size],old_value[:value],new_value),
             size: old_value[:size] + 1
           }
         else
@@ -168,7 +168,7 @@ describe RRList::List do
       rr_list = RRList::List.new :size => 10 ,:range => 1 do |index,old_value,new_value|
         if old_value
           {
-            value: RRMath.average(old_value[:size],old_value[:value],new_value),
+            value: RRList::Functions.average(old_value[:size],old_value[:value],new_value),
             size: old_value[:size] + 1
           }
         else

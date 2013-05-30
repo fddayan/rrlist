@@ -85,6 +85,24 @@ Usage
 
 *Ranges*
 
+A range of indexs grouped in the same position.
+For a renge of 3 for indexes 0,1,2 the value goes in position 1
+
+    rrlist = RRList::List.new :size => 10, :range => 3
+
+    rrlist.add_at 0, 0
+    rrlist.values         #=> [0, nil, nil, nil, nil, nil, nil, nil, nil, nil]
+    rrlist.add_at 1, 1
+    rrlist.values         #=> [1, nil, nil, nil, nil, nil, nil, nil, nil, nil]
+    rrlist.add_at 2, 2
+    rrlist.values         #=> [2, nil, nil, nil, nil, nil, nil, nil, nil, nil]
+    rrlist.add_at 3, 3
+    rrlist.values         #=> [2, 3, nil, nil, nil, nil, nil, nil, nil, nil]
+    rrlist.add_at 4, 4
+    rrlist.values         #=> [2, 4, nil, nil, nil, nil, nil, nil, nil, nil]
+    rrlist.add_at 5, 5
+    rrlist.values         #=> [2, 5, nil, nil, nil, nil, nil, nil, nil, nil]
+
     rrlist = RRList::List.new :size => 10, :range => 5
 
     0.upto(100) { |n| rrlist.add(n) }
@@ -109,7 +127,9 @@ To sum all the values added to a range
     rrlist.max_index  #=> 100
 
 
+rrlist tool
+=============
 
-
+It comes with a tool to
 
 

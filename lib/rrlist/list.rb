@@ -8,6 +8,7 @@ module RRList
 
     def initialize(options={},&function_proc)
       raise ":size is required" unless options[:size]
+      raise ":range should be greater thant 0" if options[:range] &&  options[:range] < 1
 
       @store = options[:store] || RRList::Stores::InMemoryArray.new
       @size = options[:size]
@@ -134,11 +135,13 @@ module RRList
 
     # @return the values
     def values
-      if @current_index < (@size*@range)
-        @store.raw
-      else
-        @store.start_at(@position)
-      end
+      ret = if @current_index < (@size*@range)
+              @store.raw
+            else
+              @store.start_at(@position)
+            end
+
+      return ret
     end
 
     def to_s

@@ -9,7 +9,7 @@ module Functions
     RRList::Functions::FUNCTIONS_PROC[name] || (raise "Function #{name} cannot be found")
   end
 
-  def self.average(numbers,previous_average,add_average,add_numbers=1)
+  def self.calc_average(numbers,previous_average,add_average,add_numbers=1)
     numbers = numbers.to_f
     previous_average = previous_average.to_f
     add_average = add_average.to_f
@@ -17,13 +17,13 @@ module Functions
     (((numbers*previous_average )+ (add_average*add_numbers))/(numbers+add_numbers))
   end
 
-  def self.agregate_proc
+  def self.avg
     Proc.new do |index, old_value, new_value|
       case new_value
         when Hash
           if old_value
             {
-              value: RRList::Functions.average(old_value[:size],old_value[:value],new_value[:value],new_value[:size]),
+              value: RRList::Functions.calc_average(old_value[:size],old_value[:value],new_value[:value],new_value[:size]),
               size: old_value[:size] + new_value[:size]
             }
           else
@@ -35,7 +35,7 @@ module Functions
         else
            if old_value
             {
-              value: RRList::Functions.average(old_value[:size],old_value[:value],new_value),
+              value: RRList::Functions.calc_average(old_value[:size],old_value[:value],new_value),
               size: old_value[:size] + 1
             }
           else
@@ -60,7 +60,7 @@ module Functions
     end
   end
 
-  def self.sum
+  def self.incr
     Proc.new do |index, old_value, new_value|
       old_value ? (old_value + new_value) : new_value
     end
@@ -74,10 +74,10 @@ module Functions
 
 
    FUNCTIONS_PROC = {
-    avg: RRList::Functions::agregate_proc,
+    avg: RRList::Functions::avg,
     max: RRList::Functions::max,
     min: RRList::Functions::min,
-    incr: RRList::Functions::sum,
+    incr: RRList::Functions::incr,
     decr: RRList::Functions::decr
     }
 end

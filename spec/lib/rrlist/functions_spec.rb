@@ -2,11 +2,11 @@ require 'spec_helper'
 
 describe RRList::Functions do
 
-  context ".average" do
+  context ".calc_average" do
     it "should agregate" do
-      RRList::Functions.average(3,(2+3+4)/3,7).should eq ((2+3+4+7)/4)
-      RRList::Functions.average(3,(2+3+4)/3.0,(7+4)/2.0,2).should eq ((2+3+4+7+4)/5.0)
-      RRList::Functions.average(5,2,7,5).should eq 4.5
+      RRList::Functions.calc_average(3,(2+3+4)/3,7).should eq ((2+3+4+7)/4)
+      RRList::Functions.calc_average(3,(2+3+4)/3.0,(7+4)/2.0,2).should eq ((2+3+4+7+4)/5.0)
+      RRList::Functions.calc_average(5,2,7,5).should eq 4.5
     end
   end
 

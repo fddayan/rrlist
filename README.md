@@ -32,10 +32,13 @@ or
 Usage
 ======
 
+```ruby
     require 'rrlist'
+```
 
 *Basic manipulation*
 
+```ruby
     rrlist = RRList::List.new :size => 10
 
     rrlist.values #=> [nil, nil, nil, nil, nil, nil, nil, nil, nil, nil]
@@ -69,9 +72,11 @@ Usage
     rrlist.values         #=> [nil, nil, nil, nil, nil, nil, nil, nil, nil, "B"]
     rrlist.min_index      #=> 1991
     rrlist.max_index      #=> 2000
+```
 
 *Looping*
 
+```ruby
     rrlist = RRList::List.new :size => 10
 
     1.upto(100) { |n| rrlist.add(n) }
@@ -81,13 +86,14 @@ Usage
     # => 91 91
     # => 92 92
     ....
-
+```
 
 *Ranges*
 
 A range of indexs grouped in the same position.
 For a renge of 3 for indexes 0,1,2 the value goes in position 1
 
+```ruby
     rrlist = RRList::List.new :size => 10, :range => 3
 
     rrlist.add_at 0, 0
@@ -110,12 +116,13 @@ For a renge of 3 for indexes 0,1,2 the value goes in position 1
     rrlist.values     #=> [59, 64, 69, 74, 79, 84, 89, 94, 99, 100]
     rrlist.min_index  #=> 55
     rrlist.max_index  #=> 100
-
+```
 
 *Functions*
 
 To sum all the values added to a range
 
+```ruby
     rrlist = RRList::List.new :size => 10, :range => 5 do |index, old_value, new_value|
       (old_value||0) + new_value
     end
@@ -125,7 +132,7 @@ To sum all the values added to a range
     rrlist.values     #=> [285, 310, 335, 360, 385, 410, 435, 460, 485, 100]
     rrlist.min_index  #=> 55
     rrlist.max_index  #=> 100
-
+```
 
 rrlist tool
 =============

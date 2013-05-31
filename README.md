@@ -7,13 +7,15 @@ Basically, you can add elements to a list, but the sizes remains constant over t
 
 If you add an element to to the list that is out of the range, moves the cursor forward and items at the lower indexes are lost.
 
-For example:
+For example with a list of size 5:
 
     [1,2,3,4,5]
     add 6
     [2,3,4,5,6]
     add 7
     [3,4,5,6,7]
+    add 20
+    [nil,nil,nil,nil,20]
 
 Install
 ========
@@ -134,9 +136,22 @@ To sum all the values added to a range
     rrlist.max_index  #=> 100
 ```
 
-rrlist tool
-=============
+*Array API*
 
-It comes with a tool to
+```ruby
+    rrlist = RRList::List.new :size => 10
 
+    rrlist.values   #=> [nil, nil, nil, nil, nil, nil, nil, nil, nil, nil]
 
+    rrlist[1]="a"
+    rrlist.values   #=> [nil, "a", nil, nil, nil, nil, nil, nil, nil, nil]
+    rrlist[1]       #=> "a"
+
+    rrlist[2]="b"
+    rrlist.values   #=> [nil, "a", "b", nil, nil, nil, nil, nil, nil, nil]
+    rrlist[2]       #=> "b"
+
+    rrlist << "c"
+    rrlist.values   #=> [nil, "a", "b", "c", nil, nil, nil, nil, nil, nil]
+    rrlist[3]       #=> "c"
+```

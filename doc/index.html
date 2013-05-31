@@ -61,10 +61,164 @@
 
     <iframe id="search_frame"></iframe>
 
-    <div id="content"><div id='filecontents'></div></div>
+    <div id="content"><div id='filecontents'><h1>WORK IN PROGRESS (ready soon)</h1>
+
+<h1>RRList</h1>
+
+<p>Inspired by <code>RRDTool</code></p>
+
+<p>Basically, you can add elements to a list, but the sizes remains constant over time.</p>
+
+<p>If you add an element to to the list that is out of the range, moves the cursor forward and items at the lower indexes are lost.</p>
+
+<p>For example with a list of size 5:</p>
+
+<pre class="code ruby"><code class="ruby"><span class='lbracket'>[</span><span class='int'>1</span><span class='comma'>,</span><span class='int'>2</span><span class='comma'>,</span><span class='int'>3</span><span class='comma'>,</span><span class='int'>4</span><span class='comma'>,</span><span class='int'>5</span><span class='rbracket'>]</span>
+<span class='id identifier rubyid_add'>add</span> <span class='int'>6</span>
+<span class='lbracket'>[</span><span class='int'>2</span><span class='comma'>,</span><span class='int'>3</span><span class='comma'>,</span><span class='int'>4</span><span class='comma'>,</span><span class='int'>5</span><span class='comma'>,</span><span class='int'>6</span><span class='rbracket'>]</span>
+<span class='id identifier rubyid_add'>add</span> <span class='int'>7</span>
+<span class='lbracket'>[</span><span class='int'>3</span><span class='comma'>,</span><span class='int'>4</span><span class='comma'>,</span><span class='int'>5</span><span class='comma'>,</span><span class='int'>6</span><span class='comma'>,</span><span class='int'>7</span><span class='rbracket'>]</span>
+<span class='id identifier rubyid_add'>add</span> <span class='int'>20</span>
+<span class='lbracket'>[</span><span class='kw'>nil</span><span class='comma'>,</span><span class='kw'>nil</span><span class='comma'>,</span><span class='kw'>nil</span><span class='comma'>,</span><span class='kw'>nil</span><span class='comma'>,</span><span class='int'>20</span><span class='rbracket'>]</span>
+</code></pre>
+
+<h1>Install</h1>
+
+<pre class="code ruby"><code class="ruby"><span class='id identifier rubyid_gem'>gem</span> <span class='id identifier rubyid_install'>install</span> <span class='id identifier rubyid_rrlist'>rrlist</span>
+</code></pre>
+
+<p>or</p>
+
+<pre class="code ruby"><code class="ruby"><span class='id identifier rubyid_gem'>gem</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>rrlist</span><span class='tstring_end'>'</span></span>
+</code></pre>
+
+<p>or</p>
+
+<pre class="code ruby"><code class="ruby">git clone ...
+rake install
+</code></pre>
+
+<h1>Usage</h1>
+
+<pre class="code ruby"><code class="ruby">    <span class='id identifier rubyid_require'>require</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>rrlist</span><span class='tstring_end'>'</span></span>
+</code></pre>
+
+<p><em>Basic manipulation</em></p>
+
+<pre class="code ruby"><code class="ruby">    <span class='id identifier rubyid_rrlist'>rrlist</span> <span class='op'>=</span> <span class='const'>RRList</span><span class='op'>::</span><span class='const'>List</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span> <span class='symbol'>:size</span> <span class='op'>=&gt;</span> <span class='int'>10</span>
+
+    <span class='id identifier rubyid_rrlist'>rrlist</span><span class='period'>.</span><span class='id identifier rubyid_values'>values</span> <span class='comment'>#=&gt; [nil, nil, nil, nil, nil, nil, nil, nil, nil, nil]
+</span>
+    <span class='int'>1</span><span class='period'>.</span><span class='id identifier rubyid_upto'>upto</span><span class='lparen'>(</span><span class='int'>100</span><span class='rparen'>)</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_n'>n</span><span class='op'>|</span> <span class='id identifier rubyid_rrlist'>rrlist</span><span class='period'>.</span><span class='id identifier rubyid_add'>add</span><span class='lparen'>(</span><span class='id identifier rubyid_n'>n</span><span class='rparen'>)</span> <span class='rbrace'>}</span>
+
+    <span class='id identifier rubyid_rrlist'>rrlist</span><span class='period'>.</span><span class='id identifier rubyid_values'>values</span>     <span class='comment'>#=&gt; [91, 92, 93, 94, 95, 96, 97, 98, 99, 100]
+</span>    <span class='id identifier rubyid_rrlist'>rrlist</span><span class='period'>.</span><span class='id identifier rubyid_min_index'>min_index</span>  <span class='comment'>#=&gt; 91
+</span>    <span class='id identifier rubyid_rrlist'>rrlist</span><span class='period'>.</span><span class='id identifier rubyid_min_index'>min_index</span>  <span class='comment'>#=&gt; 100
+</span>    <span class='id identifier rubyid_rrlist'>rrlist</span><span class='period'>.</span><span class='id identifier rubyid_get'>get</span><span class='lparen'>(</span><span class='int'>93</span><span class='rparen'>)</span>    <span class='comment'>#=&gt; 93
+</span>
+    <span class='id identifier rubyid_rrlist'>rrlist</span><span class='period'>.</span><span class='id identifier rubyid_add'>add</span><span class='lparen'>(</span><span class='int'>101</span><span class='rparen'>)</span>
+
+    <span class='id identifier rubyid_rrlist'>rrlist</span><span class='period'>.</span><span class='id identifier rubyid_values'>values</span>     <span class='comment'>#=&gt; [92, 93, 94, 95, 96, 97, 98, 99, 100, 101]
+</span>    <span class='id identifier rubyid_rrlist'>rrlist</span><span class='period'>.</span><span class='id identifier rubyid_min_index'>min_index</span>  <span class='comment'>#=&gt; 92
+</span>    <span class='id identifier rubyid_rrlist'>rrlist</span><span class='period'>.</span><span class='id identifier rubyid_min_index'>min_index</span>  <span class='comment'>#=&gt; 101
+</span>
+    <span class='id identifier rubyid_rrlist'>rrlist</span><span class='period'>.</span><span class='id identifier rubyid_add'>add</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>any object</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
+
+    <span class='id identifier rubyid_rrlist'>rrlist</span><span class='period'>.</span><span class='id identifier rubyid_values'>values</span>     <span class='comment'>#=&gt; [93, 94, 95, 96, 97, 98, 99, 100, 101, &quot;any object&quot;]
+</span>    <span class='id identifier rubyid_rrlist'>rrlist</span><span class='period'>.</span><span class='id identifier rubyid_min_index'>min_index</span>  <span class='comment'>#=&gt; 93
+</span>    <span class='id identifier rubyid_rrlist'>rrlist</span><span class='period'>.</span><span class='id identifier rubyid_min_index'>min_index</span>  <span class='comment'>#=&gt; 102
+</span>
+    <span class='id identifier rubyid_rrlist'>rrlist</span><span class='period'>.</span><span class='id identifier rubyid_add_at'>add_at</span> <span class='int'>105</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>A</span><span class='tstring_end'>&quot;</span></span>
+    <span class='id identifier rubyid_rrlist'>rrlist</span><span class='period'>.</span><span class='id identifier rubyid_values'>values</span>     <span class='comment'>#=&gt; [96, 97, 98, 99, 100, 101, &quot;any object&quot;, nil, nil, &quot;A&quot;]
+</span>    <span class='id identifier rubyid_rrlist'>rrlist</span><span class='period'>.</span><span class='id identifier rubyid_min_index'>min_index</span>  <span class='comment'>#=&gt; 96
+</span>    <span class='id identifier rubyid_rrlist'>rrlist</span><span class='period'>.</span><span class='id identifier rubyid_max_index'>max_index</span>  <span class='comment'>#=&gt; 105
+</span>
+    <span class='id identifier rubyid_rrlist'>rrlist</span><span class='period'>.</span><span class='id identifier rubyid_add_at'>add_at</span> <span class='int'>2000</span><span class='comma'>,</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>B</span><span class='tstring_end'>&quot;</span></span>
+    <span class='id identifier rubyid_rrlist'>rrlist</span><span class='period'>.</span><span class='id identifier rubyid_add_at'>add_at</span> <span class='int'>105</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>A</span><span class='tstring_end'>&quot;</span></span>
+    <span class='id identifier rubyid_rrlist'>rrlist</span><span class='period'>.</span><span class='id identifier rubyid_values'>values</span>         <span class='comment'>#=&gt; [nil, nil, nil, nil, nil, nil, nil, nil, nil, &quot;B&quot;]
+</span>    <span class='id identifier rubyid_rrlist'>rrlist</span><span class='period'>.</span><span class='id identifier rubyid_min_index'>min_index</span>      <span class='comment'>#=&gt; 1991
+</span>    <span class='id identifier rubyid_rrlist'>rrlist</span><span class='period'>.</span><span class='id identifier rubyid_max_index'>max_index</span>      <span class='comment'>#=&gt; 2000
+</span></code></pre>
+
+<p><em>Looping</em></p>
+
+<pre class="code ruby"><code class="ruby">    rrlist = RRList::List.new :size =&gt; 10
+
+    1.upto(100) { |n| rrlist.add(n) }
+
+    rrlist.each {  |value| ... }
+    rrlist.each_with_index {  |value,index| puts &quot;#{value} #{index}&quot; }
+    # =&gt; 91 91
+    # =&gt; 92 92
+    ....
+</code></pre>
+
+<p><em>Ranges</em></p>
+
+<p>A range of indexs grouped in the same position.
+For a renge of 3 for indexes 0,1,2 the value goes in position 1</p>
+
+<pre class="code ruby"><code class="ruby">    <span class='id identifier rubyid_rrlist'>rrlist</span> <span class='op'>=</span> <span class='const'>RRList</span><span class='op'>::</span><span class='const'>List</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span> <span class='symbol'>:size</span> <span class='op'>=&gt;</span> <span class='int'>10</span><span class='comma'>,</span> <span class='symbol'>:range</span> <span class='op'>=&gt;</span> <span class='int'>3</span>
+
+    <span class='id identifier rubyid_rrlist'>rrlist</span><span class='period'>.</span><span class='id identifier rubyid_add_at'>add_at</span> <span class='int'>0</span><span class='comma'>,</span> <span class='int'>0</span>
+    <span class='id identifier rubyid_rrlist'>rrlist</span><span class='period'>.</span><span class='id identifier rubyid_values'>values</span>         <span class='comment'>#=&gt; [0, nil, nil, nil, nil, nil, nil, nil, nil, nil]
+</span>    <span class='id identifier rubyid_rrlist'>rrlist</span><span class='period'>.</span><span class='id identifier rubyid_add_at'>add_at</span> <span class='int'>1</span><span class='comma'>,</span> <span class='int'>1</span>
+    <span class='id identifier rubyid_rrlist'>rrlist</span><span class='period'>.</span><span class='id identifier rubyid_values'>values</span>         <span class='comment'>#=&gt; [1, nil, nil, nil, nil, nil, nil, nil, nil, nil]
+</span>    <span class='id identifier rubyid_rrlist'>rrlist</span><span class='period'>.</span><span class='id identifier rubyid_add_at'>add_at</span> <span class='int'>2</span><span class='comma'>,</span> <span class='int'>2</span>
+    <span class='id identifier rubyid_rrlist'>rrlist</span><span class='period'>.</span><span class='id identifier rubyid_values'>values</span>         <span class='comment'>#=&gt; [2, nil, nil, nil, nil, nil, nil, nil, nil, nil]
+</span>    <span class='id identifier rubyid_rrlist'>rrlist</span><span class='period'>.</span><span class='id identifier rubyid_add_at'>add_at</span> <span class='int'>3</span><span class='comma'>,</span> <span class='int'>3</span>
+    <span class='id identifier rubyid_rrlist'>rrlist</span><span class='period'>.</span><span class='id identifier rubyid_values'>values</span>         <span class='comment'>#=&gt; [2, 3, nil, nil, nil, nil, nil, nil, nil, nil]
+</span>    <span class='id identifier rubyid_rrlist'>rrlist</span><span class='period'>.</span><span class='id identifier rubyid_add_at'>add_at</span> <span class='int'>4</span><span class='comma'>,</span> <span class='int'>4</span>
+    <span class='id identifier rubyid_rrlist'>rrlist</span><span class='period'>.</span><span class='id identifier rubyid_values'>values</span>         <span class='comment'>#=&gt; [2, 4, nil, nil, nil, nil, nil, nil, nil, nil]
+</span>    <span class='id identifier rubyid_rrlist'>rrlist</span><span class='period'>.</span><span class='id identifier rubyid_add_at'>add_at</span> <span class='int'>5</span><span class='comma'>,</span> <span class='int'>5</span>
+    <span class='id identifier rubyid_rrlist'>rrlist</span><span class='period'>.</span><span class='id identifier rubyid_values'>values</span>         <span class='comment'>#=&gt; [2, 5, nil, nil, nil, nil, nil, nil, nil, nil]
+</span>
+    <span class='id identifier rubyid_rrlist'>rrlist</span> <span class='op'>=</span> <span class='const'>RRList</span><span class='op'>::</span><span class='const'>List</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span> <span class='symbol'>:size</span> <span class='op'>=&gt;</span> <span class='int'>10</span><span class='comma'>,</span> <span class='symbol'>:range</span> <span class='op'>=&gt;</span> <span class='int'>5</span>
+
+    <span class='int'>0</span><span class='period'>.</span><span class='id identifier rubyid_upto'>upto</span><span class='lparen'>(</span><span class='int'>100</span><span class='rparen'>)</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_n'>n</span><span class='op'>|</span> <span class='id identifier rubyid_rrlist'>rrlist</span><span class='period'>.</span><span class='id identifier rubyid_add'>add</span><span class='lparen'>(</span><span class='id identifier rubyid_n'>n</span><span class='rparen'>)</span> <span class='rbrace'>}</span>
+
+    <span class='id identifier rubyid_rrlist'>rrlist</span><span class='period'>.</span><span class='id identifier rubyid_values'>values</span>     <span class='comment'>#=&gt; [59, 64, 69, 74, 79, 84, 89, 94, 99, 100]
+</span>    <span class='id identifier rubyid_rrlist'>rrlist</span><span class='period'>.</span><span class='id identifier rubyid_min_index'>min_index</span>  <span class='comment'>#=&gt; 55
+</span>    <span class='id identifier rubyid_rrlist'>rrlist</span><span class='period'>.</span><span class='id identifier rubyid_max_index'>max_index</span>  <span class='comment'>#=&gt; 100
+</span></code></pre>
+
+<p><em>Functions</em></p>
+
+<p>To sum all the values added to a range</p>
+
+<pre class="code ruby"><code class="ruby">    <span class='id identifier rubyid_rrlist'>rrlist</span> <span class='op'>=</span> <span class='const'>RRList</span><span class='op'>::</span><span class='const'>List</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span> <span class='symbol'>:size</span> <span class='op'>=&gt;</span> <span class='int'>10</span><span class='comma'>,</span> <span class='symbol'>:range</span> <span class='op'>=&gt;</span> <span class='int'>5</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_index'>index</span><span class='comma'>,</span> <span class='id identifier rubyid_old_value'>old_value</span><span class='comma'>,</span> <span class='id identifier rubyid_new_value'>new_value</span><span class='op'>|</span>
+      <span class='lparen'>(</span><span class='id identifier rubyid_old_value'>old_value</span><span class='op'>||</span><span class='int'>0</span><span class='rparen'>)</span> <span class='op'>+</span> <span class='id identifier rubyid_new_value'>new_value</span>
+    <span class='kw'>end</span>
+
+    <span class='int'>0</span><span class='period'>.</span><span class='id identifier rubyid_upto'>upto</span><span class='lparen'>(</span><span class='int'>100</span><span class='rparen'>)</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_n'>n</span><span class='op'>|</span> <span class='id identifier rubyid_rrlist'>rrlist</span><span class='period'>.</span><span class='id identifier rubyid_add'>add</span><span class='lparen'>(</span><span class='id identifier rubyid_n'>n</span><span class='rparen'>)</span> <span class='rbrace'>}</span>
+
+    <span class='id identifier rubyid_rrlist'>rrlist</span><span class='period'>.</span><span class='id identifier rubyid_values'>values</span>     <span class='comment'>#=&gt; [285, 310, 335, 360, 385, 410, 435, 460, 485, 100]
+</span>    <span class='id identifier rubyid_rrlist'>rrlist</span><span class='period'>.</span><span class='id identifier rubyid_min_index'>min_index</span>  <span class='comment'>#=&gt; 55
+</span>    <span class='id identifier rubyid_rrlist'>rrlist</span><span class='period'>.</span><span class='id identifier rubyid_max_index'>max_index</span>  <span class='comment'>#=&gt; 100
+</span></code></pre>
+
+<p><em>Array API</em></p>
+
+<pre class="code ruby"><code class="ruby">    <span class='id identifier rubyid_rrlist'>rrlist</span> <span class='op'>=</span> <span class='const'>RRList</span><span class='op'>::</span><span class='const'>List</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span> <span class='symbol'>:size</span> <span class='op'>=&gt;</span> <span class='int'>10</span>
+
+    <span class='id identifier rubyid_rrlist'>rrlist</span><span class='period'>.</span><span class='id identifier rubyid_values'>values</span>   <span class='comment'>#=&gt; [nil, nil, nil, nil, nil, nil, nil, nil, nil, nil]
+</span>
+    <span class='id identifier rubyid_rrlist'>rrlist</span><span class='lbracket'>[</span><span class='int'>1</span><span class='rbracket'>]</span><span class='op'>=</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>a</span><span class='tstring_end'>&quot;</span></span>
+    <span class='id identifier rubyid_rrlist'>rrlist</span><span class='period'>.</span><span class='id identifier rubyid_values'>values</span>   <span class='comment'>#=&gt; [nil, &quot;a&quot;, nil, nil, nil, nil, nil, nil, nil, nil]
+</span>    <span class='id identifier rubyid_rrlist'>rrlist</span><span class='lbracket'>[</span><span class='int'>1</span><span class='rbracket'>]</span>       <span class='comment'>#=&gt; &quot;a&quot;
+</span>
+    <span class='id identifier rubyid_rrlist'>rrlist</span><span class='lbracket'>[</span><span class='int'>2</span><span class='rbracket'>]</span><span class='op'>=</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>b</span><span class='tstring_end'>&quot;</span></span>
+    <span class='id identifier rubyid_rrlist'>rrlist</span><span class='period'>.</span><span class='id identifier rubyid_values'>values</span>   <span class='comment'>#=&gt; [nil, &quot;a&quot;, &quot;b&quot;, nil, nil, nil, nil, nil, nil, nil]
+</span>    <span class='id identifier rubyid_rrlist'>rrlist</span><span class='lbracket'>[</span><span class='int'>2</span><span class='rbracket'>]</span>       <span class='comment'>#=&gt; &quot;b&quot;
+</span>
+    <span class='id identifier rubyid_rrlist'>rrlist</span> <span class='op'>&lt;&lt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>c</span><span class='tstring_end'>&quot;</span></span>
+    <span class='id identifier rubyid_rrlist'>rrlist</span><span class='period'>.</span><span class='id identifier rubyid_values'>values</span>   <span class='comment'>#=&gt; [nil, &quot;a&quot;, &quot;b&quot;, &quot;c&quot;, nil, nil, nil, nil, nil, nil]
+</span>    <span class='id identifier rubyid_rrlist'>rrlist</span><span class='lbracket'>[</span><span class='int'>3</span><span class='rbracket'>]</span>       <span class='comment'>#=&gt; &quot;c&quot;
+</span></code></pre>
+</div></div>
 
     <div id="footer">
-  Generated on Mon May 27 09:38:35 2013 by
+  Generated on Fri May 31 08:53:01 2013 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.8.6.1 (ruby-1.9.2).
 </div>

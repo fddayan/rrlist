@@ -1,5 +1,8 @@
 module RRList
   module Stores
+
+    # @author Federico Dayan
+    # An implementation of a store that follows the contract
     class InMemoryArray
 
       def initialize

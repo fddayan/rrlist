@@ -2,16 +2,23 @@ require File.expand_path('../stores', __FILE__)
 
 module RRList
 
+  # @author Federico Dayan
   # Represents a Round Robin List.
   # You set the max number of items and the size does not increse. While you add more items you lose the older items
   class List
 
+    # Creates an object
+    # @param options [Hash]
+    # @option options [Integer] :size The size of the list. It does not add more elements than this.
+    # @option options [Integer] :range The range of the list. A range of 5 group 5 indexes into one position.
+    # @option options [Integer] :store Represents the where we save the data. It must follow a contract (see RRList:Stores:InMemoryArray)
+    # @yield [index, old_value, new_value]
     def initialize(options={},&function_proc)
       raise ":size is required" unless options[:size]
       raise ":range should be greater thant 0" if options[:range] &&  options[:range] < 1
 
       @store = options[:store] || RRList::Stores::InMemoryArray.new
-      @size = options[:size]
+      @size = options[:size].to_i
       @range = options[:range] || 1
 
       reset
@@ -19,28 +26,31 @@ module RRList
       @function_proc = function_proc if block_given?
     end
 
-    # Sets all values to nil, but it does not the cursor
+    # Sets all values to nil, but it does not move the cursor
     def clear
        @store.fill(nil,0...@size)
     end
 
+    # Reset this list, set all values to nil and move cursor to position 0
     def reset
       clear
       @position = 0
       @current_index = 0
     end
 
-    # @return The `min_index` and `max_index` as a list
+    # @return [Array<Integer>] The min_index and max_index as a list
     def ranges
       return [min_index,max_index]
     end
 
-    # @return True if the given number is in the limits of the current max an min index of the list
+    # @param index [Integer] A number
+    # @return [True] if the given number is in the limits of the current max an min index of the list
     def in_limits?(index)
       ( !higher?(index) && !lower?(index))
     end
 
-    # @return True if the given number is out of the range and all numbers will be lost if set
+    # @param index [Integer] A number
+    # @return [True] if the given number is out of the range and all numbers will be lost if set
     def out_of_range?(index) # refactor to out of limits?
       if in_limits?(index)
         return false
@@ -51,12 +61,14 @@ module RRList
       end
     end
 
-    # @retrun True if the giving number is higher that the current max index.
+    # @param index [Integer] A number
+    # @return [True] if the giving number is higher that the current max index.
     def higher?(index)
       index > (max_index + remaining_in_slot)
     end
 
-    # @retrun True if the giving number is lower that the current min index.
+    # @param index [Integer] A number
+    # @return [True] if the giving number is lower that the current min index.
     def lower?(index)
       index < min_index
     end
@@ -74,8 +86,9 @@ module RRList
       end
     end
 
-    # @return the value for the specified index
+    # @return [Object] the value for the specified index
     def get(index)
+      return nil unless in_limits?(index)
       pos = ((index/@range) % @size)
       @store.get(pos)
     end
@@ -94,7 +107,7 @@ module RRList
       raise "Index is lower that current index" if index < max_index
 
       @add_at_next = index + 1
-      pos = ((index/@range) % @size)
+      pos = position_for_index(index)
 
       if out_of_range?(index)
         @store.fill_with_nils
@@ -109,17 +122,26 @@ module RRList
       self
     end
 
-    # @return if range is used, returns the remaining numbers in the current position.
+    # Set the specified value in the given index. The index must be in the range.
+    def set_at(index, value)
+      raise "The index #{index} is not in the range of the list" unless in_limits?(index)
+
+      pos = position_for_index(index)
+
+      set_value(pos,value)
+    end
+
+    # @return [Integer] if range is used, returns the remaining numbers in the current position.
     def remaining_in_slot
       (@range - (max_index % @range)) - 1
     end
 
-    # @return the index size.
+    # @return [Integer] the index size of this list
     def index_size
       @size*@range
     end
 
-    # @return The min index of this list
+    # @return [Integer] The min index of the current list
     def min_index
       if max_index <= index_size
         0
@@ -128,12 +150,12 @@ module RRList
       end
     end
 
-    # @return the max indes of current position
+    # @return [Integer] the max indes of current list
     def max_index
       @current_index
     end
 
-    # @return the values
+    # @return [Array<Object>] The values of this list
     def values
       ret = if @current_index < (@size*@range)
               @store.raw
@@ -144,6 +166,7 @@ module RRList
       return ret
     end
 
+    # Pretty print this object
     def to_s
       values.to_s
     end
@@ -152,19 +175,29 @@ module RRList
     #   Array API
     #########################
 
+    # Returns the value for the given index
+    # @see #get
     def [](index)
       get(index)
     end
 
+    # Sets a value to in the given index.
+    # @see #add_at
     def []=(index,value)
       add_at(index,value)
     end
 
+    # Adds a value to the end of the list.
+    # @see #add
     def << value
       add(value)
     end
 
    private
+
+    def position_for_index(index)
+      ((index/@range) % @size)
+    end
 
     def set_value(index,val,update_position=true)
       if @function_proc

@@ -10,11 +10,10 @@ describe RRList::Functions do
     end
   end
 
-  it ".get_function_proc should return a proc" do
-    RRList::Functions::FUNCTIONS_PROC.should_not be_empty
+  it { RRList::Functions.avg.should be_a(Proc) }
+  it { RRList::Functions.incr.should be_a(Proc) }
+  it { RRList::Functions.decr.should be_a(Proc) }
+  it { RRList::Functions.min.should be_a(Proc) }
+  it { RRList::Functions.max.should be_a(Proc) }
 
-    RRList::Functions::FUNCTIONS_PROC.each do |k,v|
-      RRList::Functions.get_function_prod(k).should be_a(Proc)
-    end
-  end
 end

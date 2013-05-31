@@ -9,6 +9,7 @@ describe RRList::List do
   end
 
   it { subject.get(22).should be 22 }
+  it { subject.get(122).should be_nil }
 
   it { subject.min_index.should be 21 }
   it { subject.max_index.should be 30 }
@@ -32,6 +33,19 @@ describe RRList::List do
   it { subject.higher?(31).should be true }
 
   it { subject.values.should eq [21,22,23,24,25,26,27,28,29,30] }
+
+  context "set_at" do
+    it "should set value without moving cursor" do
+      mi = subject.max_index
+      subject.set_at(25,nil)
+      subject.values.should eq [21,22,23,24,nil,26,27,28,29,30]
+      subject.max_index.should be mi
+    end
+
+    it "should throw an exception if value is not in limits" do
+      lambda { subject.set_at(10,nil) }.should raise_exception
+    end
+  end
 
   it "each should iterate over the list" do
     subject.each { |v| v.should_not be_nil }
@@ -108,7 +122,7 @@ describe RRList::List do
   context "before_add" do
 
     it "should load proc from symbols" do
-      rr_list = RRList::List.new :size => 10 ,:range => 5, &RRList::Functions.get_function_prod(:avg)
+      rr_list = RRList::List.new :size => 10 ,:range => 5, &RRList::Functions.avg
 
       0.upto(40) do |v|
         rr_list.add_at(v,v)

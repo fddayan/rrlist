@@ -1,7 +1,7 @@
 # WORK IN PROGRESS (ready soon)
 # RRList
 
-([Docs](http://rubydoc.info/github/fddayan/rrlist/master/frames))
+[Docs](http://rubydoc.info/github/fddayan/rrlist/master/frames)
 
 Inspired by `RRDTool`
 

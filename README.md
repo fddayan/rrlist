@@ -1,6 +1,8 @@
 # WORK IN PROGRESS (ready soon)
 # RRList
 
+([Docs](http://rubydoc.info/github/fddayan/rrlist/master/frames))
+
 Inspired by `RRDTool`
 
 Basically, you can add elements to a list, but the sizes remains constant over time.

@@ -1,5 +1,6 @@
 # RRList
 
+[![Build Status](https://secure.travis-ci.org/thoughtbot/shoulda.png)](http://travis-ci.org/thoughtbot/shoulda)
 [Docs](http://rubydoc.info/github/fddayan/rrlist/master/frames)
 
 Inspired by `RRDTool`
@@ -156,3 +157,9 @@ To sum all the values added to a range
     rrlist.values   #=> [nil, "a", "b", "c", nil, nil, nil, nil, nil, nil]
     rrlist[3]       #=> "c"
 ```
+
+
+License 
+=========
+
+MIT

@@ -2,6 +2,7 @@
 
 [![Build Status](https://secure.travis-ci.org/thoughtbot/shoulda.png)](http://travis-ci.org/thoughtbot/shoulda)
 [Docs](http://rubydoc.info/github/fddayan/rrlist/master/frames)
+[![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/fddayan/rrlist/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
 
 Inspired by `RRDTool`
 

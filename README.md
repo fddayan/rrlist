@@ -1,7 +1,7 @@
-# RRList
+# RRList [![Gem Version](https://badge.fury.io/rb/rrlist.png)](http://badge.fury.io/rb/rrlist) [![Build Status](https://api.travis-ci.org/fddayan/rrlist.png)](http://travis-ci.org/fddayan/rrlist) 
 
 [![Build Status](https://secure.travis-ci.org/thoughtbot/shoulda.png)](http://travis-ci.org/thoughtbot/shoulda)
-[Docs](http://rubydoc.info/github/fddayan/rrlist/master/frames)
+[rdoc](http://rubydoc.info/github/fddayan/rrlist/master/frames)
 [![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/fddayan/rrlist/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
 
 Inspired by `RRDTool`
